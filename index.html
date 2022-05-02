@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>speaker form</title>
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>SPEAKER FORM</h1>
+            <p>Want to speak at our fake conference? fill out this form</p>
+        </div>
+
+
+        <div class="speakerform">
+        <form>
+            <div class="leftlabel">
+                <label for="name">NAME</label>
+            <div class="rightemptyspace">
+                <input type="text" name="name" id="name">
+            </div>
+            </div>
+            <div class="leftlabel">
+                <label for="email">EMAIL</label>
+                <div class="rightemptyspace">
+                    <input type="email" id="email" name="email" placeholder="Jhondeo@gmail.com">
+                </div>
+            </div>
+
+            <div class="leftlabel">
+                <label for="talk">Type of talk</label>
+            </div>
+            <div class="rightemptyspace">
+                <label for="mainstage">Main stage</label>
+                <input type="radio" name="talktype-1" id="talktype-1" value="mainstage">
+                <label for="workshop">Workshop</label>
+                <input type="radio" name="talktype-1" id="talktype-2" vlaue="workshop" checked>
+            </div>
+
+            <div class="leftlabel">
+                <label for="dropdown">Size of t-shirts</label>
+            </div>
+            <div class="rightemptyspace">
+                <select id="dropdown">
+                    <option value="Es">extra small</option>
+                    <option value="S"> small</option>
+                    <option value="M">medium</option>
+                    <option value="L">large</option>
+                </select>    
+            </div>
+
+            <div class="leftlabel">
+                <label for="abstract">Abstract</label>
+            </div>
+            <div class="rightemptyspace">
+                <textarea vale="abstract" id="abstract" width="100" height="100"></textarea>
+                <p>Describe your talk in 500 words or less</p>
+                <label for="agreebtn">
+                    <input type="checkbox" name="agreebtn" id="agreebtn">
+                    " I have read the terms & conditions".
+                </label>
+                <div><button class="btn" type="submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</body>
+</html>
