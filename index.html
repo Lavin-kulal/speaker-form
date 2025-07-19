@@ -4,69 +4,942 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>speaker form</title>
-    <link rel="stylesheet" href="stylesheet.css">
+    <title>Speaker Application - DevCon 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+            animation: backgroundMorph 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes backgroundMorph {
+            0% { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+            25% { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+            50% { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+            75% { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+            100% { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            animation: containerPulse 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes containerPulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.02); }
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            text-align: center;
+            padding: 40px;
+            border-radius: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            animation: headerFloat 3s ease-in-out infinite;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(93, 63, 211, 0.1), transparent);
+            animation: rotate 8s linear infinite;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes headerFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            background: linear-gradient(45deg, #5D3FD3, #764ba2, #f093fb);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            animation: textShimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes textShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.2em;
+            position: relative;
+            z-index: 1;
+            animation: textWave 4s ease-in-out infinite;
+        }
+
+        @keyframes textWave {
+            0%, 100% { transform: translateX(0px); }
+            25% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+        }
+
+        .speakerform {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 50px;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            animation: formBreathe 5s ease-in-out infinite alternate;
+        }
+
+        .speakerform::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(93, 63, 211, 0.05), transparent);
+            animation: sweep 4s ease-in-out infinite;
+        }
+
+        @keyframes sweep {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: -100%; }
+        }
+
+        @keyframes formBreathe {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.01); }
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+            position: relative;
+            animation: groupSlide 0.8s ease-out forwards;
+            transform: translateX(-50px);
+            opacity: 0;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+        .form-group:nth-child(5) { animation-delay: 0.5s; }
+        .form-group:nth-child(6) { animation-delay: 0.6s; }
+        .form-group:nth-child(7) { animation-delay: 0.7s; }
+
+        @keyframes groupSlide {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            position: relative;
+            animation: labelGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes labelGlow {
+            0% { text-shadow: 0 0 5px rgba(93, 63, 211, 0.3); }
+            100% { text-shadow: 0 0 15px rgba(93, 63, 211, 0.6); }
+        }
+
+        input[type="text"], 
+        input[type="email"], 
+        select, 
+        textarea {
+            width: 100%;
+            padding: 18px;
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background: rgba(255, 255, 255, 0.8);
+            position: relative;
+        }
+
+        input[type="text"]:focus, 
+        input[type="email"]:focus, 
+        select:focus, 
+        textarea:focus {
+            outline: none;
+            border-color: #5D3FD3;
+            box-shadow: 0 0 30px rgba(93, 63, 211, 0.3);
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255, 255, 255, 1);
+            animation: inputPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes inputPulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(93, 63, 211, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(93, 63, 211, 0.5); }
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 25px;
+            margin-top: 15px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 15px 20px;
+            border: 2px solid transparent;
+            border-radius: 30px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, transparent, rgba(93, 63, 211, 0.05));
+            animation: radioFloat 4s ease-in-out infinite;
+        }
+
+        .radio-item:nth-child(1) { animation-delay: 0s; }
+        .radio-item:nth-child(2) { animation-delay: 2s; }
+
+        @keyframes radioFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .radio-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(93, 63, 211, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .radio-item:hover {
+            border-color: #5D3FD3;
+            background: rgba(93, 63, 211, 0.1);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(93, 63, 211, 0.2);
+        }
+
+        .radio-item:hover::before {
+            left: 100%;
+        }
+
+        input[type="radio"] {
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        input[type="radio"]:checked {
+            border-color: #5D3FD3;
+            animation: radioExpand 0.5s ease;
+            box-shadow: 0 0 20px rgba(93, 63, 211, 0.4);
+        }
+
+        input[type="radio"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            background: #5D3FD3;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: radioDotExpand 0.4s ease;
+        }
+
+        @keyframes radioExpand {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes radioDotExpand {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        select {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 15px center;
+            background-repeat: no-repeat;
+            background-size: 18px;
+            appearance: none;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 140px;
+            font-family: inherit;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 25px 0;
+            cursor: pointer;
+            padding: 20px;
+            border-radius: 15px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .checkbox-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(93, 63, 211, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .checkbox-container:hover {
+            background: rgba(93, 63, 211, 0.1);
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(93, 63, 211, 0.15);
+        }
+
+        .checkbox-container:hover::before {
+            transform: translateX(100%);
+        }
+
+        input[type="checkbox"] {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        input[type="checkbox"]:checked {
+            background: #5D3FD3;
+            border-color: #5D3FD3;
+            animation: checkboxExpand 0.4s ease;
+            box-shadow: 0 0 20px rgba(93, 63, 211, 0.4);
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: checkmarkPop 0.3s ease 0.1s both;
+        }
+
+        @keyframes checkboxExpand {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes checkmarkPop {
+            0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); }
+        }
+
+        .btn {
+            width: 100%;
+            padding: 22px;
+            background: linear-gradient(45deg, #5D3FD3, #764ba2, #f093fb);
+            background-size: 200% 200%;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            margin-top: 30px;
+            animation: buttonPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% { 
+                background-position: 0% 50%; 
+                transform: scale(1);
+            }
+            50% { 
+                background-position: 100% 50%; 
+                transform: scale(1.02);
+            }
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(93, 63, 211, 0.4);
+            animation: none;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:active {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(93, 63, 211, 0.4);
+        }
+
+        .helper-text {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+            transition: all 0.3s ease;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #5D3FD3, #764ba2, #f093fb);
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(93, 63, 211, 0.6);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) translateX(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) translateX(200px) rotate(360deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2.2em;
+            }
+            
+            .speakerform {
+                padding: 25px;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+            }
+        }
+
+        .btn.loading {
+            pointer-events: none;
+            background: linear-gradient(45deg, #28a745, #20c997);
+            animation: loadingPulse 1s ease-in-out infinite;
+        }
+
+        .btn.loading::after {
+            content: '';
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            display: inline-block;
+            animation: spin 1s linear infinite;
+            margin-left: 15px;
+        }
+
+        @keyframes loadingPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+    </style>
 </head>
 <body>
+    <div class="progress-bar"></div>
+    
+    <div class="floating-particles"></div>
+    
     <div class="container">
         <div class="header">
-            <h1>SPEAKER FORM</h1>
-            <p>Want to speak at our fake conference? fill out this form</p>
+            <h1>SPEAKER APPLICATION</h1>
+            <p>DevCon 2025 • San Francisco • March 15-17, 2025<br>
+            Join 200+ industry leaders sharing cutting-edge insights with 5,000+ developers</p>
         </div>
-
-
+        
         <div class="speakerform">
-        <form>
-            <div class="leftlabel">
-                <label for="name">NAME</label>
-            <div class="rightemptyspace">
-                <input type="text" name="name" id="name">
-            </div>
-            </div>
-            <div class="leftlabel">
-                <label for="email">EMAIL</label>
-                <div class="rightemptyspace">
-                    <input type="email" id="email" name="email" placeholder="Jhondeo@gmail.com">
+            <form id="speakerForm">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" name="firstName" id="firstName" required>
                 </div>
-            </div>
 
-            <div class="leftlabel">
-                <label for="talk">Type of talk</label>
-            </div>
-            <div class="rightemptyspace">
-                <label for="mainstage">Main stage</label>
-                <input type="radio" name="talktype-1" id="talktype-1" value="mainstage">
-                <label for="workshop">Workshop</label>
-                <input type="radio" name="talktype-1" id="talktype-2" vlaue="workshop" checked>
-            </div>
-
-            <div class="leftlabel">
-                <label for="dropdown">Size of t-shirts</label>
-            </div>
-            <div class="rightemptyspace">
-                <select id="dropdown">
-                    <option value="Es">extra small</option>
-                    <option value="S"> small</option>
-                    <option value="M">medium</option>
-                    <option value="L">large</option>
-                </select>    
-            </div>
-
-            <div class="leftlabel">
-                <label for="abstract">Abstract</label>
-            </div>
-            <div class="rightemptyspace">
-                <textarea vale="abstract" id="abstract" width="100" height="100"></textarea>
-                <p>Describe your talk in 500 words or less</p>
-                <label for="agreebtn">
-                    <input type="checkbox" name="agreebtn" id="agreebtn">
-                    " I have read the terms & conditions".
-                </label>
-                <div><button class="btn" type="submit">Submit</button>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" name="lastName" id="lastName" required>
                 </div>
-            </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="speaker@company.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="jobTitle">Job Title</label>
+                    <input type="text" name="jobTitle" id="jobTitle" placeholder="Senior Software Engineer, CTO, etc." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Company/Organization</label>
+                    <input type="text" name="company" id="company" placeholder="Google, Microsoft, Startup Inc." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" name="phone" id="phone" placeholder="+1 (555) 123-4567">
+                </div>
+
+                <div class="form-group">
+                    <label for="linkedin">LinkedIn Profile</label>
+                    <input type="url" name="linkedin" id="linkedin" placeholder="https://linkedin.com/in/yourprofile">
+                </div>
+
+                <div class="form-group">
+                    <label for="twitter">Twitter/X Handle (Optional)</label>
+                    <input type="text" name="twitter" id="twitter" placeholder="@yourusername">
+                </div>
+
+                <div class="form-group">
+                    <label>Session Type</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" name="sessionType" id="keynote" value="keynote">
+                            <label for="keynote">Keynote (45 min)</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" name="sessionType" id="talk" value="talk" checked>
+                            <label for="talk">Technical Talk (30 min)</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" name="sessionType" id="workshop" value="workshop">
+                            <label for="workshop">Workshop (90 min)</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" name="sessionType" id="panel" value="panel">
+                            <label for="panel">Panel Discussion</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="track">Conference Track</label>
+                    <select id="track" name="track" required>
+                        <option value="">Select a track...</option>
+                        <option value="ai-ml">AI & Machine Learning</option>
+                        <option value="cloud-devops">Cloud & DevOps</option>
+                        <option value="frontend">Frontend Development</option>
+                        <option value="backend">Backend & Systems</option>
+                        <option value="mobile">Mobile Development</option>
+                        <option value="data">Data Engineering & Analytics</option>
+                        <option value="security">Cybersecurity</option>
+                        <option value="blockchain">Blockchain & Web3</option>
+                        <option value="iot">IoT & Edge Computing</option>
+                        <option value="leadership">Tech Leadership</option>
+                        <option value="startup">Startup & Entrepreneurship</option>
+                        <option value="open-source">Open Source</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Presentation Title</label>
+                    <input type="text" name="title" id="title" placeholder="Building Scalable Microservices with Kubernetes" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="abstract">Abstract & Description</label>
+                    <textarea name="abstract" id="abstract" placeholder="Provide a detailed description of your presentation including:
+- What attendees will learn
+- Key takeaways
+- Target audience level (beginner/intermediate/advanced)
+- Technologies or concepts covered
+- Any demos or case studies included" required></textarea>
+                    <div class="helper-text">300-500 words recommended</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="bio">Speaker Bio</label>
+                    <textarea name="bio" id="bio" placeholder="Brief professional biography highlighting your expertise, experience, and relevant background for this presentation." required></textarea>
+                    <div class="helper-text">100-200 words recommended</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="experience">Speaking Experience</label>
+                    <select id="experience" name="experience" required>
+                        <option value="">Select your experience level...</option>
+                        <option value="first-time">First-time speaker</option>
+                        <option value="beginner">1-3 speaking engagements</option>
+                        <option value="intermediate">4-10 speaking engagements</option>
+                        <option value="experienced">10+ speaking engagements</option>
+                        <option value="professional">Professional speaker/trainer</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="previousTalks">Previous Speaking Engagements (Optional)</label>
+                    <textarea name="previousTalks" id="previousTalks" placeholder="List recent conferences, meetups, or events where you've presented. Include links to recordings if available."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Presentation Format</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" name="format" id="inPerson" value="in-person" checked>
+                            <label for="inPerson">In-Person</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" name="format" id="virtual" value="virtual">
+                            <label for="virtual">Virtual</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" name="format" id="hybrid" value="hybrid">
+                            <label for="hybrid">Either</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Audience Level</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" name="level" id="beginner" value="beginner">
+                            <label for="beginner">Beginner</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" name="level" id="intermediate" value="intermediate" checked>
+                            <label for="intermediate">Intermediate</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" name="level" id="advanced" value="advanced">
+                            <label for="advanced">Advanced</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="requirements">Technical Requirements</label>
+                    <textarea name="requirements" id="requirements" placeholder="List any specific AV equipment, software, or setup requirements for your presentation."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="travelSupport">Travel Support Needed</label>
+                    <select id="travelSupport" name="travelSupport" required>
+                        <option value="">Select option...</option>
+                        <option value="none">No support needed</option>
+                        <option value="accommodation">Accommodation only</option>
+                        <option value="travel">Travel expenses only</option>
+                        <option value="full">Full travel & accommodation</option>
+                        <option value="discuss">Prefer to discuss</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dietary">Dietary Restrictions/Allergies</label>
+                    <input type="text" name="dietary" id="dietary" placeholder="Vegetarian, Gluten-free, Nut allergy, etc.">
+                </div>
+
+                <div class="form-group">
+                    <label for="tshirt">Conference T-Shirt Size</label>
+                    <select id="tshirt" name="tshirt" required>
+                        <option value="">Select your size...</option>
+                        <option value="xs">Extra Small (XS)</option>
+                        <option value="s">Small (S)</option>
+                        <option value="m">Medium (M)</option>
+                        <option value="l">Large (L)</option>
+                        <option value="xl">Extra Large (XL)</option>
+                        <option value="xxl">Double XL (XXL)</option>
+                        <option value="xxxl">Triple XL (XXXL)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-container">
+                        <input type="checkbox" name="codeOfConduct" id="codeOfConduct" required>
+                        <label for="codeOfConduct">I agree to abide by the DevCon Code of Conduct and conference policies</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-container">
+                        <input type="checkbox" name="recording" id="recording" required>
+                        <label for="recording">I consent to having my presentation recorded and shared publicly</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-container">
+                        <input type="checkbox" name="marketing" id="marketing">
+                        <label for="marketing">I agree to participate in conference marketing activities (speaker spotlights, interviews)</label>
+                    </div>
+                </div>
+
+                <button class="btn" type="submit">Submit Speaker Application</button>
+            </form>
         </div>
     </div>
-    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('speakerForm');
+            const submitBtn = document.querySelector('.btn');
+            const inputs = document.querySelectorAll('input, select, textarea');
+            const progressBar = document.querySelector('.progress-bar');
+
+            createFloatingParticles();
+            
+            function createFloatingParticles() {
+                const container = document.querySelector('.floating-particles');
+                setInterval(() => {
+                    if (document.querySelectorAll('.particle').length < 20) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        particle.style.left = Math.random() * 100 + 'vw';
+                        particle.style.animationDelay = Math.random() * 8 + 's';
+                        particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                        container.appendChild(particle);
+                        
+                        setTimeout(() => {
+                            particle.remove();
+                        }, 10000);
+                    }
+                }, 500);
+            }
+
+            function updateProgressBar() {
+                const formData = new FormData(form);
+                let filledFields = 0;
+                const requiredFields = document.querySelectorAll('[required]');
+                
+                requiredFields.forEach(field => {
+                    if (field.type === 'checkbox' || field.type === 'radio') {
+                        if (field.checked) filledFields++;
+                    } else if (field.value.trim() !== '') {
+                        filledFields++;
+                    }
+                });
+                
+                const progress = (filledFields / requiredFields.length) * 100;
+                progressBar.style.width = progress + '%';
+            }
+
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'scale(1.03) translateY(-2px)';
+                    this.parentElement.style.filter = 'drop-shadow(0 10px 20px rgba(93, 63, 211, 0.2))';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'scale(1)';
+                    this.parentElement.style.filter = 'none';
+                });
+
+                input.addEventListener('input', updateProgressBar);
+                input.addEventListener('change', updateProgressBar);
+            });
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                submitBtn.classList.add('loading');
+                submitBtn.textContent = 'Processing...';
+                
+                setTimeout(() => {
+                    submitBtn.classList.remove('loading');
+                    submitBtn.textContent = 'Success! ✨';
+                    submitBtn.style.background = 'linear-gradient(45deg, #28a745, #20c997, #17a2b8)';
+                    
+                    const successParticles = document.createElement('div');
+                    successParticles.innerHTML = '🎉'.repeat(50);
+                    successParticles.style.position = 'fixed';
+                    successParticles.style.top = '50%';
+                    successParticles.style.left = '50%';
+                    successParticles.style.transform = 'translate(-50%, -50%)';
+                    successParticles.style.fontSize = '2em';
+                    successParticles.style.pointerEvents = 'none';
+                    successParticles.style.animation = 'explode 2s ease-out forwards';
+                    document.body.appendChild(successParticles);
+                    
+                    setTimeout(() => {
+                        successParticles.remove();
+                    }, 2000);
+                    
+                    alert('🎉 Thank you! Your speaker application has been submitted successfully. We\'ll review it and get back to you within 48 hours!');
+                    
+                    setTimeout(() => {
+                        form.reset();
+                        submitBtn.textContent = 'Submit Application';
+                        submitBtn.style.background = 'linear-gradient(45deg, #5D3FD3, #764ba2, #f093fb)';
+                        progressBar.style.width = '0%';
+                    }, 4000);
+                }, 2500);
+            });
+
+            inputs.forEach(input => {
+                input.addEventListener('invalid', function() {
+                    this.style.animation = 'shake 0.6s ease-in-out';
+                    this.style.borderColor = '#e74c3c';
+                    setTimeout(() => {
+                        this.style.animation = '';
+                        this.style.borderColor = '#e1e5e9';
+                    }, 600);
+                });
+            });
+
+            const textarea = document.getElementById('abstract');
+            const helperText = textarea.nextElementSibling;
+            
+            textarea.addEventListener('input', function() {
+                const words = this.value.trim().split(/\s+/);
+                const wordCount = this.value.trim() === '' ? 0 : words.length;
+                const remaining = Math.max(0, 500 - wordCount);
+                
+                if (this.value.trim() === '') {
+                    helperText.textContent = 'Please describe your talk in 500 words or less';
+                    helperText.style.color = '#666';
+                } else if (remaining > 0) {
+                    helperText.textContent = `${remaining} words remaining`;
+                    helperText.style.color = remaining < 50 ? '#f39c12' : '#666';
+                } else {
+                    helperText.textContent = 'Word limit exceeded!';
+                    helperText.style.color = '#e74c3c';
+                    helperText.style.animation = 'shake 0.5s ease-in-out';
+                }
+            });
+
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes explode {
+                    0% { 
+                        transform: translate(-50%, -50%) scale(0); 
+                        opacity: 1; 
+                    }
+                    50% { 
+                        transform: translate(-50%, -50%) scale(2); 
+                        opacity: 0.8; 
+                    }
+                    100% { 
+                        transform: translate(-50%, -50%) scale(4); 
+                        opacity: 0; 
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+
+            updateProgressBar();
+        });
+    </script>
 </body>
 </html>
